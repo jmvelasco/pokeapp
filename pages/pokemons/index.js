@@ -6,23 +6,47 @@
  *
  */
 import Link from "next/link";
+import styled from 'styled-components';
 
 const Pokemons = (props) => {
   return (
-    <div>
-      <h1>Pokemons</h1>
-      <ul>
+    <>
+      <Title>Pokemons</Title>
+      <ListWraper>
         {props.pokemons.map((pokemon, index) => (
-          <li key={pokemon.name}>
+          <ListItem key={pokemon.name}>
             <Link href={`/pokemons/${pokemon.name}`}>
               <a>{pokemon.name.toTitle()}</a>
             </Link>
-          </li>
+          </ListItem>
         ))}
-      </ul>
-    </div>
+      </ListWraper>
+    </>
   );
 };
+
+const Title = styled.h1`
+  font-size: 3rem;
+  color: #333;
+  text-align: center;
+`;
+const ListWraper = styled.div`
+  font-size: 1.2rem;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+`;
+const ListItem = styled.span`
+  list-style: none;
+  border: 1px solid #e4e4e4;
+  padding: 0.5rem;
+  background-color: lightblue;
+
+  &:hover {
+    background-color: darkblue;
+    color: #e4e4e4;
+  }
+`;
 
 // getServerSideProps := A nivel de server voy a conseguir las props para el componente
 // el cliente nunca verá este código, por ejemplo código como API-KEY nunca será accedida desde el cliente
