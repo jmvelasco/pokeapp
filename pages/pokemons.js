@@ -6,21 +6,13 @@
  *
  */
 import styled from 'styled-components';
-import Link from "next/link";
+import { List } from '../components/List';
 
 const Pokemons = (props) => {
   return (
     <>
       <Title>Pokemons</Title>
-      <ListWraper>
-        {props.pokemons.map((pokemon, index) => (
-          <ListItem key={pokemon.name}>
-            <Link href={`/${pokemon.name}`}>
-              <a>{pokemon.name.toTitle()}</a>
-            </Link>
-          </ListItem>
-        ))}
-      </ListWraper>
+      <List items={props.pokemons} />
     </>
   );
 };
@@ -29,23 +21,6 @@ const Title = styled.h1`
   font-size: 3rem;
   color: #333;
   text-align: center;
-`;
-const ListWraper = styled.div`
-  font-size: 1.2rem;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-`;
-const ListItem = styled.span`
-  list-style: none;
-  border: 1px solid #e4e4e4;
-  padding: 0.5rem;
-  background-color: lightblue;
-
-  &:hover {
-    background-color: darkblue;
-    color: #e4e4e4;
-  }
 `;
 
 // getServerSideProps := A nivel de server voy a conseguir las props para el componente
