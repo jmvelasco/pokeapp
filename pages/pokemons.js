@@ -25,7 +25,7 @@ const Title = styled.h1`
 
 // getServerSideProps := A nivel de server voy a conseguir las props para el componente
 // el cliente nunca verá este código, por ejemplo código como API-KEY nunca será accedida desde el cliente
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
   const pokemons = await (
     await fetch("https://pokeapi.co/api/v2/pokemon?limit=150")
   ).json();
