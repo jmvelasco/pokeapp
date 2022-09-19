@@ -55,12 +55,20 @@ export const getServerSideProps = async (ctx) => {
       disciplines {
         title
       }
+      countryAwards {
+        medals {
+          medalType
+          count
+        }
+        country {
+          name
+        }
+      }
     }
   }`;
 
   const params = { slug: queryParam };
   const result = await getData(queryGame, params);
-  console.log(result.data.olympicGame);
   const gameDetails = result.data.olympicGame;
 
   return {
