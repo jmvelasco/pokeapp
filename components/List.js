@@ -7,7 +7,7 @@ export const List = ({ items }) => (
       {items &&
         items.map((item, index) => (
           <ListItem key={item.name}>
-            <Link href={`/${item.name}`}>
+            <Link href={`${item.link}`}>
               <a>{item.name.toTitle()}</a>
             </Link>
           </ListItem>

@@ -6,7 +6,7 @@
  *
  */
 import styled from 'styled-components';
-import { List } from '../components/List';
+import { List } from '../../components/List';
 
 const Pokemons = (props) => {
   return (
@@ -30,9 +30,14 @@ export const getStaticProps = async () => {
     await fetch("https://pokeapi.co/api/v2/pokemon?limit=150")
   ).json();
 
+  const results = [];
+  pokemons.results.forEach((pokemon) => {
+    results.push({...pokemon, link:`/pokemons/${pokemon.name}`})
+  });  
+  console.log('pokemons', results);
   return {
     props: {
-      pokemons: pokemons.results,
+      pokemons: results,
     },
   };
 };

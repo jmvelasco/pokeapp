@@ -17,4 +17,20 @@ export const GlobalStyles = createGlobalStyle`
     * {
         box-sizing: border-box;
     }
+
+    nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        font-size: 1.6rem;
+        color: white;
+        background-color: darkblue;
+        padding: 0.5rem;
+        display: flex;
+    }
+
+    .active {
+        color: yellow;
+    }
 `;

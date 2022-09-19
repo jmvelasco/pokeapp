@@ -18,7 +18,7 @@ const Pokemon = (props) => {
       <h1>{props.pokemon.name.toTitle()}</h1>
 
       <StyledLink>
-        <Link href={`/`}>
+        <Link href={`/pokemons`}>
           <a>Back to Pokemon list</a>
         </Link>
       </StyledLink>
