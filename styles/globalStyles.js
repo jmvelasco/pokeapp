@@ -44,12 +44,14 @@ export const Title = styled.h1`
 
 export const StyledLink = styled.a`
   font-size: 1rem;
-  color: white;
-  background-color: darkblue;
   padding: 0.5rem;
   display: flex;
   flex-direction: row-reverse;
   flex: auto;
+
+  color: darkblue;
+  border-top: 0.1rem solid darkblue;
+  border-bottom: 0.1rem solid darkblue;
 `;
 
 export const Container = styled.div`
