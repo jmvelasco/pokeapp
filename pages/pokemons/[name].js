@@ -11,18 +11,19 @@
 import styled from "styled-components";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  Container,
+  StyledLink,
+  Properties,
+  PropertyItem,
+} from "../../styles/globalStyles";
+import { NavigateBack } from "../../components/NavigateBack";
 
 const Pokemon = (props) => {
   return (
     <>
       <h1>{props.pokemon.name.toTitle()}</h1>
-
-      <StyledLink>
-        <Link href={`/pokemons`}>
-          <a>Back to Pokemon list</a>
-        </Link>
-      </StyledLink>
-
+      <NavigateBack backToUrl="/pokemons" backToPage="Pokemon List" />
       <Container>
         <div>
           <Image
@@ -44,7 +45,7 @@ const Pokemon = (props) => {
           <Properties>
             {props.pokemon.types &&
               props.pokemon.types.map((type, idx) => (
-                <PropertyItem key={idx} pillColor='lightgreen'>
+                <PropertyItem key={idx} pillColor="lightgreen">
                   <div>{type.type.name}</div>
                 </PropertyItem>
               ))}
@@ -53,7 +54,7 @@ const Pokemon = (props) => {
           <Properties>
             {props.pokemon.abilities &&
               props.pokemon.abilities.map((abilitie, idx) => (
-                <PropertyItem key={idx} pillColor='orange'>
+                <PropertyItem key={idx} pillColor="orange">
                   <div>{abilitie.ability.name}</div>
                 </PropertyItem>
               ))}
@@ -71,44 +72,6 @@ const Pokemon = (props) => {
     </>
   );
 };
-
-const StyledLink = styled.a`
-  font-size: 1rem;
-  color: white;
-  background-color: darkblue;
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: row-reverse;
-  flex: auto;
-`;
-
-const Container = styled.div`
-  display: flex;
-`;
-
-const Properties = styled.ul`
-  padding: 0.2rem 0.5rem;
-`;
-
-const PropertyItem = styled.li`
-  color: black;
-  font-weight: bold;
-  list-style: none;
-
-  div {
-    background-color: ${(props) => props.pillColor};
-    text-align: center;
-    padding: 0.5rem;
-    border-radius: 25px;    
-    font-weight: normal;
-    width: fit-content;
-    margin: 0.1rem 0;
-  }
-
-  span {
-    font-weight: normal;
-  }
-`;
 
 const MovesList = styled.div`
   display: grid;

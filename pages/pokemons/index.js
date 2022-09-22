@@ -5,8 +5,8 @@
  *      junto con el javascript que aporta la funcionalidad de la aplicación
  *
  */
-import styled from 'styled-components';
-import { List } from '../../components/List';
+import { Title } from "../../styles/globalStyles";
+import { List } from "../../components/List";
 
 const Pokemons = (props) => {
   return (
@@ -17,12 +17,6 @@ const Pokemons = (props) => {
   );
 };
 
-const Title = styled.h1`
-  font-size: 3rem;
-  color: #333;
-  text-align: center;
-`;
-
 // getServerSideProps := A nivel de server voy a conseguir las props para el componente
 // el cliente nunca verá este código, por ejemplo código como API-KEY nunca será accedida desde el cliente
 export const getStaticProps = async () => {
@@ -32,9 +26,9 @@ export const getStaticProps = async () => {
 
   const results = [];
   pokemons.results.forEach((pokemon) => {
-    results.push({...pokemon, link:`/pokemons/${pokemon.name}`})
-  });  
-  console.log('pokemons', results);
+    results.push({ ...pokemon, link: `/pokemons/${pokemon.name}` });
+  });
+  console.log("pokemons", results);
   return {
     props: {
       pokemons: results,

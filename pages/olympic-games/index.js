@@ -1,7 +1,7 @@
 import React from "react";
 
 import { getData } from "../../utils/request";
-import styled from "styled-components";
+import { Title } from "../../styles/globalStyles";
 
 import { List } from "../../components/List";
 
@@ -13,12 +13,6 @@ const Olympicgames = (props) => {
     </>
   );
 };
-
-const Title = styled.h1`
-  font-size: 3rem;
-  color: #333;
-  text-align: center;
-`;
 
 export const getStaticProps = async () => {
   const queryAllGames = `

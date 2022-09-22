@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
@@ -33,4 +34,48 @@ export const GlobalStyles = createGlobalStyle`
     .active {
         color: yellow;
     }
+`;
+
+export const Title = styled.h1`
+  font-size: 3rem;
+  color: #333;
+  text-align: center;
+`;
+
+export const StyledLink = styled.a`
+  font-size: 1rem;
+  color: white;
+  background-color: darkblue;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: row-reverse;
+  flex: auto;
+`;
+
+export const Container = styled.div`
+  display: flex;
+`;
+
+export const Properties = styled.ul`
+  padding: 0.2rem 0.5rem;
+`;
+
+export const PropertyItem = styled.li`
+  color: black;
+  font-weight: bold;
+  list-style: none;
+
+  div {
+    background-color: ${(props) => props.pillColor};
+    text-align: center;
+    padding: 0.5rem;
+    border-radius: 25px;    
+    font-weight: normal;
+    width: fit-content;
+    margin: 0.1rem 0;
+  }
+
+  span {
+    font-weight: normal;
+  }
 `;
