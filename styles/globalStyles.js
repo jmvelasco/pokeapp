@@ -66,12 +66,13 @@ export const PropertyItem = styled.li`
   color: black;
   font-weight: bold;
   list-style: none;
+  margin: 0.2rem 0;
 
   div {
     background-color: ${(props) => props.pillColor};
     text-align: center;
     padding: 0.5rem;
-    border-radius: 25px;    
+    border-radius: 25px;
     font-weight: normal;
     width: fit-content;
     margin: 0.1rem 0;
@@ -79,5 +80,21 @@ export const PropertyItem = styled.li`
 
   span {
     font-weight: normal;
+  }
+`;
+
+export const FilterWrapper = styled.div`
+  padding: 1rem 0;
+  > input {
+    width: 100%;
+    display: inline-block;
+    height: 3rem;  border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: groove;
+
+    :focus {
+      outline: none;
+    }
   }
 `;

@@ -1,16 +1,27 @@
 import styled from "styled-components";
 import { getData } from "../../utils/request";
 import CloudinaryImage, { TRANSFORMATIONS } from "@ocs/cloudinary-image";
-import { Container, Properties, PropertyItem } from "../../styles/globalStyles";
+import {
+  Container,
+  Properties,
+  PropertyItem,
+  FilterWrapper,
+} from "../../styles/globalStyles";
 import { NavigateBack } from "../../components/NavigateBack";
+import { useState } from "react";
 
 const displayDate = (stringDate) => {
   const date = new Date(stringDate);
   return date.toLocaleDateString();
 };
 
-const OlympicGame = ({ gameDetails }) => {
-  console.dir(gameDetails, { depth: 12 });
+const OlympicGame = ({ gameDetails, countriesList }) => {
+  const [searchCountryItem, setSearchCountryItem] = useState("");
+
+  const handleFilter = (event) => {
+    setSearchCountryItem(event.target.value.toLowerCase());
+    console.log(searchCountryItem);
+  };
   return (
     <>
       <h1>{gameDetails.name}</h1>
@@ -53,31 +64,41 @@ const OlympicGame = ({ gameDetails }) => {
             ))}
           </DisciplinesWrapper>
           <PropertyItem>Clasification:</PropertyItem>
+          <FilterWrapper>
+            <input
+              placeholder="Search country..."
+              type="text"
+              onChange={() => handleFilter(event)}
+            />
+          </FilterWrapper>
           <AwardsWrapper>
-            {gameDetails.countryAwards.map((awards, idx) => (
-              <>
-                <Awards key={awards.country.name}>
-                  <p>
-                    <span>{idx + 1}</span>{awards.country.name}
-                  </p>
+            {countriesList
+              .filter((country) => country.name.toLowerCase().indexOf(searchCountryItem) === 0)
+              .map((awards, idx) => (
+                <>
+                  <Awards key={awards.name}>
+                    <p>
+                      <span>{awards.position}</span>
+                      {awards.name}
+                    </p>
 
-                  <MedalsWrapper>
-                    {awards.medals.map((medal) => (
-                      <Medal
-                        key={`${medal.medalType}-${medal.count}`}
-                        medalColor={
-                          medal.medalType === "BRONZE"
-                            ? "#CD7F32"
-                            : medal.medalType.toLowerCase()
-                        }
-                      >
-                        {medal.medalType}: {medal.count}
-                      </Medal>
-                    ))}
-                  </MedalsWrapper>
-                </Awards>
-              </>
-            ))}
+                    <MedalsWrapper>
+                      {awards.medals.map((medal) => (
+                        <Medal
+                          key={`${medal.medalType}-${medal.count}`}
+                          medalColor={
+                            medal.medalType === "BRONZE"
+                              ? "#CD7F32"
+                              : medal.medalType.toLowerCase()
+                          }
+                        >
+                          {medal.medalType}: {medal.count}
+                        </Medal>
+                      ))}
+                    </MedalsWrapper>
+                  </Awards>
+                </>
+              ))}
           </AwardsWrapper>
         </Properties>
       </Container>
@@ -92,17 +113,17 @@ const DisciplinesWrapper = styled.div`
 `;
 
 const AwardsWrapper = styled.div`
-  display: flex;  
-  gap: 1rem;
+  display: flex;
+  gap: 0.1rem;
   flex-direction: row;
   flex-wrap: wrap;
-
 `;
 
 const Awards = styled.div`
   border: 0.1rem solid lightgray;
   padding: 1rem;
   width: 30rem;
+  margin: 0.2rem 0;
 
   > p {
     font-weight: bold;
@@ -128,10 +149,6 @@ const MedalsWrapper = styled.div`
 const Medal = styled.div`
   background-color: ${(props) => props.medalColor};
 `;
-
-// const Container = styled.div`
-//   display: flex;
-// `;
 
 export const getServerSideProps = async (ctx) => {
   const queryParam = ctx.params.slug;
@@ -189,9 +206,15 @@ export const getServerSideProps = async (ctx) => {
   const result = await getData(queryGame, params);
   const gameDetails = result.data.olympicGame;
 
+  const countriesList = [];
+  gameDetails.countryAwards.forEach((award, idx) => {
+    countriesList.push({...gameDetails.countryAwards[idx].country, medals: award.medals, position: idx + 1});
+  });
+  
   return {
     props: {
       gameDetails,
+      countriesList,
     },
   };
 };
