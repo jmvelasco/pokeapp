@@ -3,6 +3,7 @@ import React, { useState } from "react";
 
 export const NavigationMenu = () => {
   const [selectedLink, setSelectedLink] = useState("pokemons");
+  console.log(selectedLink);
   return (
     <nav>
       <Link href={`/pokemons`}>

@@ -64,7 +64,6 @@ const OlympicGame = ({ gameDetails, countriesList, gameSlug }) => {
                 onClick={() => console.log(discipline.slug)}
               >
                 <div>
-                  {discipline.title}
                   <Link href={`/olympic-games/${gameSlug}/discipline/${discipline.slug}`}>
                     <a>{discipline.title}</a>
                   </Link>
