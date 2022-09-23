@@ -58,7 +58,7 @@ const OlympicGame = ({ gameDetails }) => {
               <>
                 <Awards key={awards.country.name}>
                   <p>
-                    {idx + 1} - {awards.country.name}
+                    <span>{idx + 1}</span>{awards.country.name}
                   </p>
 
                   <MedalsWrapper>
@@ -92,23 +92,37 @@ const DisciplinesWrapper = styled.div`
 `;
 
 const AwardsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-gap: 1rem;
+  display: flex;  
+  gap: 1rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+
 `;
 
 const Awards = styled.div`
-  border: 0.1rem solid lightgreen;
+  border: 0.1rem solid lightgray;
   padding: 1rem;
+  width: 30rem;
 
   > p {
     font-weight: bold;
+
+    > span {
+      padding: 0.4rem;
+      border: 1px solid blue;
+      border-radius: 2.5rem;
+      width: 3.5rem;
+      display: inline-block;
+      text-align: center;
+      margin: 0 0.4rem 0;
+    }
   }
 `;
 
 const MedalsWrapper = styled.div`
   width: 100%;
   padding-left: 2rem;
+  margin: 0 0.2rem;
 `;
 
 const Medal = styled.div`
