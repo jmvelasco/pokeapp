@@ -1,26 +1,26 @@
+import CloudinaryImage from "@ocs/cloudinary-image";
+import Link from "next/link";
+import { useState } from "react";
 import styled from "styled-components";
-import { getData } from "../../utils/request";
-import CloudinaryImage, { TRANSFORMATIONS } from "@ocs/cloudinary-image";
+import { NavigateBack } from "../../../components/NavigateBack";
 import {
   Container,
+  FilterWrapper,
   Properties,
   PropertyItem,
-  FilterWrapper,
-} from "../../styles/globalStyles";
-import { NavigateBack } from "../../components/NavigateBack";
-import { useState } from "react";
+} from "../../../styles/globalStyles";
+import { getData } from "../../../utils/request";
 
 const displayDate = (stringDate) => {
   const date = new Date(stringDate);
   return date.toLocaleDateString();
 };
 
-const OlympicGame = ({ gameDetails, countriesList }) => {
+const OlympicGame = ({ gameDetails, countriesList, gameSlug }) => {
   const [searchCountryItem, setSearchCountryItem] = useState("");
 
   const handleFilter = (event) => {
     setSearchCountryItem(event.target.value.toLowerCase());
-    console.log(searchCountryItem);
   };
   return (
     <>
@@ -58,8 +58,17 @@ const OlympicGame = ({ gameDetails, countriesList }) => {
           <PropertyItem>Sports:</PropertyItem>
           <DisciplinesWrapper>
             {gameDetails.disciplines.map((discipline) => (
-              <PropertyItem key={discipline.title} pillColor="orange">
-                <div>{discipline.title}</div>
+              <PropertyItem
+                key={discipline.title}
+                pillColor="orange"
+                onClick={() => console.log(discipline.slug)}
+              >
+                <div>
+                  {discipline.title}
+                  <Link href={`/olympic-games/${gameSlug}/discipline/${discipline.slug}`}>
+                    <a>{discipline.title}</a>
+                  </Link>
+                </div>
               </PropertyItem>
             ))}
           </DisciplinesWrapper>
@@ -73,7 +82,10 @@ const OlympicGame = ({ gameDetails, countriesList }) => {
           </FilterWrapper>
           <AwardsWrapper>
             {countriesList
-              .filter((country) => country.name.toLowerCase().indexOf(searchCountryItem) === 0)
+              .filter(
+                (country) =>
+                  country.name.toLowerCase().indexOf(searchCountryItem) === 0
+              )
               .map((awards, idx) => (
                 <>
                   <Awards key={awards.name}>
@@ -189,6 +201,7 @@ export const getServerSideProps = async (ctx) => {
       }       
       disciplines {
         title
+        slug
       }
       countryAwards {
         medals {
@@ -206,15 +219,22 @@ export const getServerSideProps = async (ctx) => {
   const result = await getData(queryGame, params);
   const gameDetails = result.data.olympicGame;
 
+  console.log({ gameDetails });
+
   const countriesList = [];
   gameDetails.countryAwards.forEach((award, idx) => {
-    countriesList.push({...gameDetails.countryAwards[idx].country, medals: award.medals, position: idx + 1});
+    countriesList.push({
+      ...gameDetails.countryAwards[idx].country,
+      medals: award.medals,
+      position: idx + 1,
+    });
   });
-  
+
   return {
     props: {
       gameDetails,
       countriesList,
+      gameSlug: queryParam
     },
   };
 };
