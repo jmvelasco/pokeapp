@@ -1,9 +1,20 @@
 import Link from "next/link";
-import React, { useState } from "react";
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
 
 export const NavigationMenu = () => {
   const [selectedLink, setSelectedLink] = useState("pokemons");
-  console.log(selectedLink);
+  const router = useRouter();
+
+  useEffect(() => {
+    const route = router.route;
+    if (route.indexOf("pokemons") >= 0) {
+      setSelectedLink("pokemons");
+    } else {
+      setSelectedLink("olympic-games");
+    }
+  }, [router.route]);
+
   return (
     <nav>
       <Link href={`/pokemons`}>
