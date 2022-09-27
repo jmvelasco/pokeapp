@@ -35,7 +35,7 @@ export const getSWDToken = async () => {
     params.append("client_secret", process.env.SWD_API_CLIENT_CREDENTIALS);
 
     const response = await fetch(
-      "https://sdw-api-ee.olympicchannel.com/auth/oauth2/realms/root/realms/ee/access_token",
+      process.env.SWD_AUTH_URL,
       {
         method: "post",
         body: params,
