@@ -10,11 +10,7 @@ import {
   PropertyItem,
 } from "../../../styles/globalStyles";
 import { getData } from "../../../utils/request";
-
-const displayDate = (stringDate) => {
-  const date = new Date(stringDate);
-  return date.toLocaleDateString();
-};
+import { displayDate } from "../../../utils/dates";
 
 const OlympicGame = ({ gameDetails, countriesList, gameSlug }) => {
   const [searchCountryItem, setSearchCountryItem] = useState("");
@@ -22,9 +18,13 @@ const OlympicGame = ({ gameDetails, countriesList, gameSlug }) => {
   const handleFilter = (event) => {
     setSearchCountryItem(event.target.value.toLowerCase());
   };
+  
   return (
     <>
       <h1>{gameDetails.name}</h1>
+      <PropertyItem>
+        sdwId: <span>{gameDetails.sdwId}</span>
+      </PropertyItem>
       <NavigateBack backToUrl="/olympic-games" backToPage="Olympic Games" />
       <Container>
         <CloudinaryImage
@@ -64,7 +64,9 @@ const OlympicGame = ({ gameDetails, countriesList, gameSlug }) => {
                 onClick={() => console.log(discipline.slug)}
               >
                 <div>
-                  <Link href={`/olympic-games/${gameSlug}/discipline/${discipline.slug}`}>
+                  <Link
+                    href={`/olympic-games/${gameSlug}/discipline/${discipline.slug}`}
+                  >
                     <a>{discipline.title}</a>
                   </Link>
                 </div>
@@ -87,7 +89,7 @@ const OlympicGame = ({ gameDetails, countriesList, gameSlug }) => {
               )
               .map((awards, idx) => (
                 <>
-                  <Awards key={awards.name}>
+                  <Awards key={`${awards.medalType}-${awards.position}`}>
                     <p>
                       <span>{awards.position}</span>
                       {awards.name}
@@ -233,7 +235,7 @@ export const getServerSideProps = async (ctx) => {
     props: {
       gameDetails,
       countriesList,
-      gameSlug: queryParam
+      gameSlug: queryParam,
     },
   };
 };

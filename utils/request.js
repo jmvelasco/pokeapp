@@ -1,9 +1,9 @@
 import {
-    ApolloClient,
-    InMemoryCache,
-    ApolloProvider,
-    gql,
-  } from "@apollo/client";
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  gql,
+} from "@apollo/client";
 
 const client = new ApolloClient({
   uri: "http://localhost:4000/",
@@ -27,5 +27,25 @@ export const getData = async (query, variables) => {
   return result;
 };
 
+export const getSWDToken = async () => {
+  try {
+    const params = new URLSearchParams();
+    params.append("grant_type", "client_credentials");
+    params.append("client_id", process.env.SWD_API_CLIENT);
+    params.append("client_secret", process.env.SWD_API_CLIENT_CREDENTIALS);
 
+    const response = await fetch(
+      "https://sdw-api-ee.olympicchannel.com/auth/oauth2/realms/root/realms/ee/access_token",
+      {
+        method: "post",
+        body: params,
+      }
+    );
 
+    const json = await response.json();
+    return json.access_token;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
